@@ -9,7 +9,10 @@ from django.views import View
 from django.conf import settings
 from django.core.files.storage import default_storage
 from django.core.files.base import ContentFile
+from matplotlib.backends.backend_agg import FigureCanvasAgg
 
+from PIL import Image
+from io import BytesIO
 import requests
 import json
 import cv2
@@ -93,16 +96,20 @@ def image_handler(image):
     #print()
     #print()
     #print("hahasdfsdf")
+    print("########################")
     with open(tmp_file, 'rb') as f:
         files = {'file':img_encoded.tostring()}
         response = requests.post(test_url, files=files, headers=headers)
+        i = Image.open(BytesIO(response.content))
+        i.show()
         #, data=img_encoded.tostring()
         #, files=files
     #path=default_storage.save('json/tmp.json', ContentFile(json.loads(response.text)))
-    print("########################")
-    with open('tmp.html','w') as f:
-        print(response.text)
-        f.writelines(response.text)
+    
+
+    #with open('tmp.json','w') as f:
+        #print(response.files)
+        #f.writelines(response.text)
     #with open('tmp.html','r') as f:
     print("########################")
     #print(tmp_file)

@@ -3,6 +3,8 @@
 Almost finished.
 
 #### TODO
-- [ ] Fixing bugs at back-end, re-test
+- [ ] Store and display image locally 
+- [x] Retrieve image from response
+- [x] Fixing bugs at back-end, re-test
 - [x] Transfer local data into Database
 - [x] Call API functions
