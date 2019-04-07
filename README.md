@@ -1,7 +1,8 @@
-#Front End Design
+# Front End Design
 
 Almost finished.
 
-#TODO
-[x]1. Transfer local data into Database
-[x]2. Call API functions
+# TODO
+- [ ] Fixing bugs at back-end, re-test
+- [x] Transfer local data into Database
+- [x] Call API functions
