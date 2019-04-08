@@ -26,29 +26,20 @@ def people_image_view(request):
         form = PeopleForm(request.POST, request.FILES) 
   
         if form.is_valid():
-            #image=request.FILES.get('images') 
+            # read image from POST, send to api and store the response locally
             image = request.FILES['people_Main_Img']
-            #print(type(image))
             if image:
                 image_handler(image,request.POST.get('age',''),request.POST.get('name',''))
             
-            
-            #files = {'file': open('1.jpg', 'rb')}
-            #r = request.Post.get(url, files=files)
-            #print(r.text)
             name=request.POST.get('name','')
             age=request.POST.get('age','')
             gender=request.POST.get('gender','')
             people_Main_Img_url=request.POST.get('people_Main_Img.url','')
-            #tmp(name)
-            #tmp(age)
-            #tmp(gender)
-            #tmp(people_Main_Img_url)
+
             form.save()
             return redirect('success') 
     else: 
         form = PeopleForm()
-    #print("asdfasdfa")
     return render(request, 'image_app/people_image_form.html', {'form' : form}) 
   
   
@@ -63,14 +54,7 @@ def display_people_images(request):
   
         # getting all the objects of people. 
         Peoples = People.objects.all()  
-        
-        #img = cv2.imread('lena.jpg')
-        # encode image as jpeg
-        #_, img_encoded = cv2.imencode('.jpg', img)
-        # send http request with image and receive response
-        #response = requests.post(test_url, data=img_encoded.tostring(), headers=headers)
-
-        #print(json.loads(response.text))
+ 
         return render(request, 'image_app/display_people_images.html', 
                      {'people_images' : Peoples})
 
@@ -79,7 +63,6 @@ def display_people_images(request):
 def image_handler(image,age,name):
     path=default_storage.save('images/lena.jpg', ContentFile(image.read()))
     tmp_file = os.path.join(settings.MEDIA_ROOT,path)
-    #print("asdfkjasldkfja")
     img = cv2.imread(tmp_file)
     _, img_encoded = cv2.imencode('.jpg', img)
     
@@ -90,32 +73,12 @@ def image_handler(image,age,name):
     # prepare headers for http request
     content_type = 'image/jpeg'
     headers = {'file': content_type}
-    #print()
-    #print()
-    #print(img_encoded.tostring())
-    #print()
-    #print()
-    #print("hahasdfsdf")
+
     print("########################")
+    # save image locally
     with open(tmp_file, 'rb') as f:
         files = {'file':img_encoded.tostring()}
         response = requests.post(test_url, files=files, data={'age':age})#, headers=headers)
         i = Image.open(BytesIO(response.content))
-
         i.save("media/images/"+name+".png")
-        #i.show()
-        #, data=img_encoded.tostring()
-        #, files=files
-    #path=default_storage.save('json/tmp.json', ContentFile(json.loads(response.text)))
-    
-
-    #with open('tmp.json','w') as f:
-        #print(response.files)
-        #f.writelines(response.text)
-    #with open('tmp.html','r') as f:
     print("########################")
-    #print(tmp_file)
-    #os.remove(tmp_file)
-    #i.save(tmp_file)
-    #print(type(json.loads(response.text)))
-    #print("asdfkjasldkfjalsdfja%@$#^&*(^%$#")
