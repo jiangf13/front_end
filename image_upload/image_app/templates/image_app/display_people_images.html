@@ -17,8 +17,13 @@
             <div class="col-md-4"> 
                     {{ people.name }} 
                     {{ people.age }}
-                    {{ people.gender }} 
-                     <img src="{{ people.people_Main_Img.url }}" class="img-responsive" style="width: 100%; float: left; margin-right: 10px;" /> 
+                    {% if people.gender %}
+                      Male
+                    {% else %}
+                      Female
+                    {% endif %}
+                     <img src="{{ people.people_Main_Img.url }}" class="img-responsive" style="width: 100%; float: left; margin-right: 10px;" />
+                     <img src="media/images/{{ people.name }}.png" class="img-responsive" style="width: 100%; float: left; margin-right: 10px;" />
             </div> 
     {% endfor %} 
   

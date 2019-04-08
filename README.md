@@ -1,9 +1,9 @@
 ## Front End Design
 
-Almost finished.
+finished. But terrifying
 
 #### TODO
-- [ ] Store and display image locally 
+- [x] Store and display image locally 
 - [x] Retrieve image from response
 - [x] Fixing bugs at back-end, re-test
 - [x] Transfer local data into Database

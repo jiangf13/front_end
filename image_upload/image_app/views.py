@@ -30,8 +30,7 @@ def people_image_view(request):
             image = request.FILES['people_Main_Img']
             #print(type(image))
             if image:
-                #form.save()
-                image_handler(image)
+                image_handler(image,request.POST.get('age',''),request.POST.get('name',''))
             
             
             #files = {'file': open('1.jpg', 'rb')}
@@ -45,6 +44,7 @@ def people_image_view(request):
             #tmp(age)
             #tmp(gender)
             #tmp(people_Main_Img_url)
+            form.save()
             return redirect('success') 
     else: 
         form = PeopleForm()
@@ -64,19 +64,19 @@ def display_people_images(request):
         # getting all the objects of people. 
         Peoples = People.objects.all()  
         
-        img = cv2.imread('lena.jpg')
+        #img = cv2.imread('lena.jpg')
         # encode image as jpeg
-        _, img_encoded = cv2.imencode('.jpg', img)
+        #_, img_encoded = cv2.imencode('.jpg', img)
         # send http request with image and receive response
-        response = requests.post(test_url, data=img_encoded.tostring(), headers=headers)
+        #response = requests.post(test_url, data=img_encoded.tostring(), headers=headers)
 
-        print(json.loads(response.text))
+        #print(json.loads(response.text))
         return render(request, 'image_app/display_people_images.html', 
                      {'people_images' : Peoples})
 
 
 
-def image_handler(image):
+def image_handler(image,age,name):
     path=default_storage.save('images/lena.jpg', ContentFile(image.read()))
     tmp_file = os.path.join(settings.MEDIA_ROOT,path)
     #print("asdfkjasldkfja")
@@ -99,9 +99,11 @@ def image_handler(image):
     print("########################")
     with open(tmp_file, 'rb') as f:
         files = {'file':img_encoded.tostring()}
-        response = requests.post(test_url, files=files, headers=headers)
+        response = requests.post(test_url, files=files, data={'age':age})#, headers=headers)
         i = Image.open(BytesIO(response.content))
-        i.show()
+
+        i.save("media/images/"+name+".png")
+        #i.show()
         #, data=img_encoded.tostring()
         #, files=files
     #path=default_storage.save('json/tmp.json', ContentFile(json.loads(response.text)))
@@ -113,6 +115,7 @@ def image_handler(image):
     #with open('tmp.html','r') as f:
     print("########################")
     #print(tmp_file)
-    os.remove(tmp_file)
+    #os.remove(tmp_file)
+    #i.save(tmp_file)
     #print(type(json.loads(response.text)))
     #print("asdfkjasldkfjalsdfja%@$#^&*(^%$#")
