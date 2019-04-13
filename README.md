@@ -1,7 +1,7 @@
 ## Front End Design
 
 #### Usage:
-0. Run back-end inference, cd into folder Image_upload
+0. Run back-end inference
 1. Start front-end server
 ```
 $ python3 front_end/image_upload/manage.py runserver
