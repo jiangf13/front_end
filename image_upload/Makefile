@@ -6,4 +6,5 @@ mig:
 server:
 	python3 manage.py runserver
 clean:
+	rm db.sqlite3
 	echo nothing\ to\ clean

@@ -81,4 +81,5 @@ def image_handler(image,age,name):
         response = requests.post(test_url, files=files, data={'age':age})#, headers=headers)
         i = Image.open(BytesIO(response.content))
         i.save("media/images/"+name+".png")
+    os.remove(tmp_file)
     print("########################")
